@@ -121,13 +121,13 @@ if (is_dir(VALET_HOME_PATH)) {
         info('The ['.$name.'] symbolic link has been removed.');
     })->descriptions('Remove the specified Valet link');
 
-    /**
+     /**
      * Secure the given domain with a trusted TLS certificate.
      */
-    $app->command('secure [domain]', function ($domain = null) {
+    $app->command('secure [domain] [--no-redirect]', function ($domain = null, $noRedirect) {
         $url = ($domain ?: Site::host(getcwd())).'.'.Configuration::read()['domain'];
 
-        Site::secure($url);
+        Site::secure($url, $noRedirect);
 
         PhpFpm::restart();
 
